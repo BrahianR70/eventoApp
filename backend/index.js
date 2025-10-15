@@ -83,32 +83,27 @@ app.post('/api/inscripcion', async (req, res) => {
       color: { dark: '#000000', light: '#FFFFFF' },
     });
 
-    // 🖼️ 2️⃣ Crear un canvas más grande para agregar texto
-    // 2️⃣ Crear un canvas más grande para agregar texto 
-    const qrImage = await loadImage(qrBase64); 
-    const canvas = createCanvas(qrImage.width, qrImage.height + 100); 
-    const ctx = canvas.getContext('2d'); 
-    
-    // Fondo blanco 
-    ctx.fillStyle = '#FFFFFF'; 
-    ctx.fillRect(0, 0, canvas.width, canvas.height); 
-    
-    // Dibujar QR 
-    ctx.drawImage(qrImage, 0, 0); 
-    
-    // 3️⃣ Texto (nombre y cédula) 
-    ctx.fillStyle = '#000000'; ctx.font = 'bold 28px Arial'; 
+    // 🖼️ 2️⃣ Crear canvas y agregar texto
+    const qrImage = await loadImage(qrBase64);
+    const canvas = createCanvas(qrImage.width, qrImage.height + 100);
+    const ctx = canvas.getContext('2d');
+
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.drawImage(qrImage, 0, 0);
+
+    ctx.fillStyle = '#000000';
+    ctx.font = 'bold 28px Arial';
     ctx.fillText(`Nombre: ${nombre}`, 20, qrImage.height + 35);
     ctx.fillText(`Cédula: ${cedula}`, 20, qrImage.height + 70);
-    
-    // 4️⃣ Convertir todo a base64 final 
+
     const qrCode = canvas.toDataURL('image/png');
 
     // 💾 5️⃣ Guardar en base de datos
-    const sql = 
-     `INSERT INTO inscripciones (nombre, cedula, email, cargo, entidad, qr)
-      VALUES (?, ?, ?, ?, ?, ?)`;
-
+    const sql = `
+      INSERT INTO inscripciones (nombre, cedula, email, cargo, entidad, qr)
+      VALUES (?, ?, ?, ?, ?, ?)
+    `;
     await pool.execute(sql, [nombre, cedula, email, cargo || null, entidad || null, qrCode]);
 
     // ✅ 6️⃣ Responder al frontend
@@ -116,9 +111,35 @@ app.post('/api/inscripcion', async (req, res) => {
 
   } catch (err) {
     console.error("❌ Error al crear inscripción:", err);
-    return res.status(500).json({ error: "Error en el servidor al crear la inscripción" });
+
+    // 🔍 Si el error viene de MySQL
+    if (err.code) {
+      // Códigos comunes de MySQL
+      switch (err.code) {
+        case 'ER_DUP_ENTRY':
+          return res.status(400).json({ error: "Esta cédula o email ya está registrado." });
+        case 'ER_BAD_NULL_ERROR':
+          return res.status(400).json({ error: "Faltan campos obligatorios en la base de datos." });
+        case 'ER_NO_SUCH_TABLE':
+          return res.status(500).json({ error: "La tabla 'inscripciones' no existe en la base de datos." });
+        case 'PROTOCOL_CONNECTION_LOST':
+          return res.status(500).json({ error: "Conexión con la base de datos perdida." });
+        default:
+          return res.status(500).json({
+            error: "Error en base de datos",
+            detalle: err.sqlMessage || err.message
+          });
+      }
+    }
+
+    // ⚠️ Error general (por QR, Canvas u otros)
+    return res.status(500).json({
+      error: "Error en el servidor al crear la inscripción",
+      detalle: err.message
+    });
   }
 });
+
 
 
 // ---------- Módulo 2: Listar inscripciones ----------
