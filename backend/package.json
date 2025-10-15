@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node index.js",
+    "build": "react-scripts build",
+    "postinstall": "npm rebuild canvas --update-binary"
   },
   "dependencies": {
     "body-parser": "^1.20.2",
