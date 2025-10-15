@@ -61,6 +61,7 @@ export default function Confirmacion() {
 
     try {
       const cred = btoa(`${credenciales.usuario}:${credenciales.contrasena}`);
+      console.log(API_URL);
       const { data } = await axios.post(
         `${API_URL}/confirmar`,
         { cedula },
