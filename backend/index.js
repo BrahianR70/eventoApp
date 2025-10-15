@@ -16,10 +16,10 @@ app.use(cors());
 
 // --- CONFIGURA la conexión aquí --- //
 const dbConfig = {
-  host: "10.10.11.19",
-  user: "root",
-  password: "aries123",
-  database: "evento2025",
+  host: "bz5ltbnqxnqrdetkgbok-mysql.services.clever-cloud.com",
+  user: "uixjlofujdntqszl",
+  password: "tsYgbMkDKat8IGNl93jU",
+  database: "bz5ltbnqxnqrdetkgbok",
   port: 3306,
   waitForConnections: true,
   connectionLimit: 10,
