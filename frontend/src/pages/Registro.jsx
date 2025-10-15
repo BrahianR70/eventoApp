@@ -73,8 +73,8 @@ export default function Registro() {
       >
         
       <div>
-        <img src={logo} alt="Logo Aries" style={{ width: 180, marginBottom: 20 }} />
-        <h2 style={{ color: "#004E92", marginBottom: 20 }}>Registro al Evento</h2>
+        <img src={logo} alt="Logo Aries" style={{ width: 180, marginBottom: 10 }} />
+        <h2 style={{ color: "#004E92", marginBottom: 10 }}>Registro al Evento</h2>
 
         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '2px', marginBottom: '15px' }}>
           <input name="nombre" placeholder="Nombre completo" value={form.nombre} onChange={handleChange} required />
