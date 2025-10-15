@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../api';
-import logo from "../assets/logo.png"; // ✅ asegúrate de tener este archivo
+import logo from "../assets/logo.png";
+import { useNavigate } from 'react-router-dom';
 
 export default function Registro() {
   const [form, setForm] = useState({
@@ -13,6 +14,8 @@ export default function Registro() {
   });
   const [qr, setQr] = useState(null);
   const [mensaje, setMensaje] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (e) => setForm({ ...form, [e.target.name]: e.target.value });
 
@@ -20,22 +23,25 @@ export default function Registro() {
     e.preventDefault();
     setMensaje('');
     setQr(null);
+    setLoading(true);
 
     try {
       const { data } = await axios.post(`${API_URL}/inscripcion`, form);
-
-      // ✅ Mostrar mensaje y QR devuelto (nuevo o existente)
       setQr(data.qrCode);
       setMensaje(data.mensaje || 'Inscripción registrada exitosamente');
 
+      // ✅ Redirige automáticamente a /confirmar después de 2 segundos
+      setTimeout(() => navigate('/confirmar'), 2000);
+
     } catch (error) {
       if (error.response?.status === 409) {
-        // 409 = ya está registrada
         setMensaje(error.response.data.error);
       } else {
         console.error(error);
         setMensaje('❌ Error al registrar la inscripción. Intenta de nuevo.');
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -48,6 +54,11 @@ export default function Registro() {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  };
+
+  // 🧭 Función para redirigir al hacer clic en el logo
+  const handleLogoClick = () => {
+    navigate('/confirmar');
   };
 
   return (
@@ -71,9 +82,21 @@ export default function Registro() {
           maxWidth: 480,
         }}
       >
-        
-      <div>
-        <img src={logo} alt="Logo Aries" style={{ width: 180, marginBottom: 10 }} />
+        {/* 🧩 Logo que actúa como link oculto a /confirmar */}
+        <img
+          src={logo}
+          alt="Logo Aries"
+          style={{
+            width: 180,
+            marginBottom: 10,
+            cursor: 'pointer', // indica que se puede hacer clic
+            transition: 'transform 0.2s ease',
+          }}
+          onClick={handleLogoClick}
+          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1.0)'}
+        />
+
         <h2 style={{ color: "#004E92", marginBottom: 10 }}>Registro al Evento</h2>
 
         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '2px', marginBottom: '15px' }}>
@@ -82,61 +105,72 @@ export default function Registro() {
           <input name="email" placeholder="Email" type="email" value={form.email} onChange={handleChange} required />
           <input name="cargo" placeholder="Cargo / Rol" value={form.cargo} onChange={handleChange} />
           <input name="entidad" placeholder="Entidad / Empresa" value={form.entidad} onChange={handleChange} />
+
           <button
             type="submit"
+            disabled={loading}
             style={{
-                width: "100%",
-                padding: "10px 12px",
-                background: "linear-gradient(90deg, #00C3FF, #004E92)",
-                color: "white",
-                border: "none",
-                borderRadius: 8,
-                cursor: "pointer",
-                fontWeight: "bold",
-              }}
+              width: "100%",
+              padding: "10px 12px",
+              background: loading
+                ? "gray"
+                : "linear-gradient(90deg, #00C3FF, #004E92)",
+              color: "white",
+              border: "none",
+              borderRadius: 8,
+              cursor: loading ? "not-allowed" : "pointer",
+              fontWeight: "bold",
+              transition: "0.3s",
+            }}
           >
-            Registrar
+            {loading ? "Enviando..." : "Registrar"}
           </button>
         </form>
 
-        {mensaje && <p style={{ fontWeight: 'bold', color: mensaje.includes('registrada') ? 'orange' : 'green' }}>{mensaje}</p>}
-      </div>
+        {mensaje && (
+          <p style={{
+            fontWeight: 'bold',
+            color: mensaje.includes('registrada') ? 'orange' : 'green'
+          }}>
+            {mensaje}
+          </p>
+        )}
 
-      {qr && (
-        <div>
-          <h3>Código QR generado:</h3>
-          <img
-            src={qr}
-            alt="QR de confirmación"
-            style={{
-              width: '100%',
-              height: 'auto',
-              maxWidth: '600px',
-              border: '1px solid #ccc',
-              borderRadius: '1px',
-              padding: '1px',
-              backgroundColor: 'white',
-              display: 'block',
-              margin: '0 auto'
-            }}
-          />
-          <button
-            onClick={handleDescargar}
-            style={{
-              marginTop: '15px',
-              backgroundColor: '#007bff',
-              color: 'white',
-              border: 'none',
-              borderRadius: '8px',
-              padding: '10px 20px',
-              cursor: 'pointer',
-              fontSize: '16px'
-            }}
+        {qr && (
+          <div>
+            <h3>Código QR generado:</h3>
+            <img
+              src={qr}
+              alt="QR de confirmación"
+              style={{
+                width: '100%',
+                height: 'auto',
+                maxWidth: '600px',
+                border: '1px solid #ccc',
+                borderRadius: '1px',
+                padding: '1px',
+                backgroundColor: 'white',
+                display: 'block',
+                margin: '0 auto'
+              }}
+            />
+            <button
+              onClick={handleDescargar}
+              style={{
+                marginTop: '15px',
+                backgroundColor: '#007bff',
+                color: 'white',
+                border: 'none',
+                borderRadius: '8px',
+                padding: '10px 20px',
+                cursor: 'pointer',
+                fontSize: '16px'
+              }}
             >
-            📥 Descargar QR
-          </button>
-        </div>
-      )}
+              📥 Descargar QR
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
