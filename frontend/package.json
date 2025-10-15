@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "start": "react-scripts start",
-    "build": "npm install --legacy-peer-deps && react-scripts build"
+    "build": "react-scripts build"
   },
   "dependencies": {
     "axios": "^1.4.0",
@@ -25,5 +25,16 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "overrides": {
+    "react-qr-reader": {
+      "react": "$react"
+    }
+  },
+  "engines": {
+    "npm": ">=7.0.0"
+  },
+  "config": {
+    "legacy-peer-deps": true
   }
 }
