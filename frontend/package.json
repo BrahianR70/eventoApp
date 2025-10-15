@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build"
+  "start": "react-scripts start",
+  "prebuild": "chmod +x node_modules/.bin/react-scripts || echo 'Skipping chmod on Windows'",
+  "build": "react-scripts build"
   },
   "dependencies": {
     "axios": "^1.4.0",
