@@ -30,9 +30,6 @@ export default function Registro() {
       setQr(data.qrCode);
       setMensaje(data.mensaje || 'Inscripción registrada exitosamente');
 
-      // ✅ Redirige automáticamente a /confirmar después de 2 segundos
-      setTimeout(() => navigate('/confirmar'), 2000);
-
     } catch (error) {
       if (error.response?.status === 409) {
         setMensaje(error.response.data.error);
@@ -88,7 +85,7 @@ export default function Registro() {
           alt="Logo Aries"
           style={{
             width: 180,
-            marginBottom: 10,
+            marginBottom: 0,
             cursor: 'pointer', // indica que se puede hacer clic
             transition: 'transform 0.2s ease',
           }}
