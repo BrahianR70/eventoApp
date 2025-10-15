@@ -111,25 +111,25 @@ app.post('/api/inscripcion', async (req, res) => {
     await pool.execute(sql, [nombre, cedula, email, cargo || null, entidad || null, qrCode]);
 
     // 📧 Intentar enviar el correo (sin bloquear si falla)
-    try {
-      await transporter.sendMail({
-        from: 'Evento Aries 2025', // remitente
-        to: email,
-        subject: "Confirmación de inscripción - Evento Aries",
-        html: `
-          <h2>Hola ${nombre},</h2>
-          <p>Tu inscripción al evento fue registrada exitosamente.</p>
-          <p>Adjunto tu código QR para ingresar al evento:</p>
-          <br/>
-          <img src="${qrCode}" alt="QR de confirmación" width="300"/>
-          <p style="font-size:12px;color:gray;">Por favor guarda esta imagen, será necesaria para tu ingreso.</p>
-        `,
-      });
-      console.log(`📨 Email enviado a ${email}`);
-    } catch (mailErr) {
-      console.warn(`⚠️ No se pudo enviar correo a ${email}:`, mailErr.message);
-      // No interrumpimos la respuesta
-    }
+    // try {
+    //   await transporter.sendMail({
+    //     from: 'Evento Aries 2025', // remitente
+    //     to: email,
+    //     subject: "Confirmación de inscripción - Evento Aries",
+    //     html: `
+    //       <h2>Hola ${nombre},</h2>
+    //       <p>Tu inscripción al evento fue registrada exitosamente.</p>
+    //       <p>Adjunto tu código QR para ingresar al evento:</p>
+    //       <br/>
+    //       <img src="${qrCode}" alt="QR de confirmación" width="300"/>
+    //       <p style="font-size:12px;color:gray;">Por favor guarda esta imagen, será necesaria para tu ingreso.</p>
+    //     `,
+    //   });
+    //   console.log(`📨 Email enviado a ${email}`);
+    // } catch (mailErr) {
+    //   console.warn(`⚠️ No se pudo enviar correo a ${email}:`, mailErr.message);
+    //   // No interrumpimos la respuesta
+    // }
 
     // ✅ Responder al frontend
     return res.json({ mensaje: "Inscripción exitosa", qrCode });
