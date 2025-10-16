@@ -122,7 +122,7 @@ export default function Confirmacion() {
             maxWidth: 480,
           }}
         >
-          <img src={logo} alt="Logo Aries" style={{ width: 180, marginBottom: 20 }} />
+          <img src={logo} alt="Logo Aries" style={{ width: 170, marginBottom: 1 }} />
           <h2 style={{ color: "#004E92", marginBottom: 20 }}>Ingreso de Usuario</h2>
 
           <input

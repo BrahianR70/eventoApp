@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { API_URL } from '../api';
-import logo from "../assets/logo.png";
+import logo1 from "../assets/logo.png"; // Logo principal
+import logo2 from "../assets/logo_evento.PNG"; // Segundo logo (reemplázalo por el tuyo)
 import { useNavigate } from 'react-router-dom';
 
 export default function Registro() {
@@ -29,7 +30,6 @@ export default function Registro() {
       const { data } = await axios.post(`${API_URL}/inscripcion`, form);
       setQr(data.qrCode);
       setMensaje(data.mensaje || 'Inscripción registrada exitosamente');
-
     } catch (error) {
       if (error.response?.status === 409) {
         setMensaje(error.response.data.error);
@@ -53,7 +53,6 @@ export default function Registro() {
     document.body.removeChild(link);
   };
 
-  // 🧭 Función para redirigir al hacer clic en el logo
   const handleLogoClick = () => {
     navigate('/confirmar');
   };
@@ -79,26 +78,45 @@ export default function Registro() {
           maxWidth: 480,
         }}
       >
-        {/* 🧩 Logo que actúa como link oculto a /confirmar */}
-        <img
-          src={logo}
-          alt="Logo Aries"
+        {/* 🔹 Contenedor de logos */}
+        <div
           style={{
-            width: 180,
-            marginBottom: 0,
-            cursor: 'pointer', // indica que se puede hacer clic
-            transition: 'transform 0.2s ease',
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            marginBottom: 5,
           }}
-          onClick={handleLogoClick}
-          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1.0)'}
-        />
+        >
+          {/* Logo izquierdo (oculto enlace a confirmar) */}
+          <img
+            src={logo1}
+            alt="Logo Aries"
+            style={{
+              width: 110,
+              cursor: "pointer",
+              transition: "transform 0.2s ease",
+            }}
+            onClick={handleLogoClick}
+            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1.0)'}
+          />
+
+          {/* Logo derecho (estático o de patrocinador) */}
+          <img
+            src={logo2}
+            alt="Logo del Evento"
+            style={{
+              width: 100,
+              transition: "transform 0.2s ease",
+            }}
+          />
+        </div>
 
         <h2 style={{ color: "#004E92", marginBottom: 10 }}>Registro al Evento</h2>
 
         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '2px', marginBottom: '15px' }}>
           <input name="nombre" placeholder="Nombre completo" value={form.nombre} onChange={handleChange} required />
-          <input name="cedula" placeholder="N° de Identificación" type="number" inputmode="numeric" value={form.cedula} onChange={handleChange} required />
+          <input name="cedula" placeholder="N° de Identificación" type="number" inputMode="numeric" value={form.cedula} onChange={handleChange} required />
           <input name="email" placeholder="Email" type="email" value={form.email} onChange={handleChange} required />
           <input name="cargo" placeholder="Cargo / Rol" value={form.cargo} onChange={handleChange} />
           <input name="entidad" placeholder="Entidad / Empresa" value={form.entidad} onChange={handleChange} />
