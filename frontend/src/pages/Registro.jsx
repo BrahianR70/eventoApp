@@ -98,7 +98,7 @@ export default function Registro() {
 
         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '2px', marginBottom: '15px' }}>
           <input name="nombre" placeholder="Nombre completo" value={form.nombre} onChange={handleChange} required />
-          <input name="cedula" placeholder="N° de Identificación" type="number" value={form.cedula} onChange={handleChange} required />
+          <input name="cedula" placeholder="N° de Identificación" type="number" inputmode="numeric" value={form.cedula} onChange={handleChange} required />
           <input name="email" placeholder="Email" type="email" value={form.email} onChange={handleChange} required />
           <input name="cargo" placeholder="Cargo / Rol" value={form.cargo} onChange={handleChange} />
           <input name="entidad" placeholder="Entidad / Empresa" value={form.entidad} onChange={handleChange} />
