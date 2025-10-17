@@ -112,7 +112,7 @@ export default function Registro() {
           />
         </div>
 
-        <h2 style={{ color: "#004E92", marginBottom: 10 }}>Registro al Evento</h2>
+        <h2 style={{ color: "#004E92", marginBottom: 10 }}>Registro</h2>
 
         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '2px', marginBottom: '15px' }}>
           <input name="nombre" placeholder="Nombre completo" value={form.nombre} onChange={handleChange} required />
