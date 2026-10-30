@@ -64,7 +64,7 @@ export default function Registro() {
         alignItems: "center",
         justifyContent: "center",
         padding: "30px",
-        background: "linear-gradient(135deg, #00C3FF, #004E92)",
+        background: "linear-gradient(135deg, #3BD8CF, #00C3FF)",
       }}
     >
       <div
@@ -82,7 +82,7 @@ export default function Registro() {
         <div
           style={{
             display: "flex",
-            justifyContent: "space-between",
+            justifyContent: "center",
             alignItems: "center",
             marginBottom: 5,
           }}
@@ -102,23 +102,23 @@ export default function Registro() {
           />
 
           {/* Logo derecho (estático o de patrocinador) */}
-          <img
+          {/*<img
             src={logo2}
             alt="Logo del Evento"
             style={{
               width: 100,
               transition: "transform 0.2s ease",
             }}
-          />
+          />*/}
         </div>
 
-        <h2 style={{ color: "#004E92", marginBottom: 10 }}>Registro</h2>
+        <h2 style={{ color: "#3BD8CF", marginBottom: 10 }}>Registro</h2>
 
         <form onSubmit={handleSubmit} style={{ display: 'grid', gap: '2px', marginBottom: '15px' }}>
           <input name="nombre" placeholder="Nombre completo" value={form.nombre} onChange={handleChange} required />
           <input name="cedula" placeholder="N° de Identificación" type="number" inputMode="numeric" value={form.cedula} onChange={handleChange} required />
-          <input name="email" placeholder="Email" type="email" value={form.email} onChange={handleChange} required />
-          <input name="cargo" placeholder="Cargo / Rol" value={form.cargo} onChange={handleChange} />
+          {/* <input name="email" placeholder="Email" type="email" value={form.email} onChange={handleChange} required />
+          <input name="cargo" placeholder="Cargo / Rol" value={form.cargo} onChange={handleChange} /> */}
           <input name="entidad" placeholder="Entidad / Empresa" value={form.entidad} onChange={handleChange} />
 
           <button
@@ -129,10 +129,10 @@ export default function Registro() {
               padding: "10px 12px",
               background: loading
                 ? "gray"
-                : "linear-gradient(90deg, #00C3FF, #004E92)",
+                : "linear-gradient(90deg, #3BD8CF, #00C3FF)",
               color: "white",
               border: "none",
-              borderRadius: 8,
+              borderRadius: 25,
               cursor: loading ? "not-allowed" : "pointer",
               fontWeight: "bold",
               transition: "0.3s",
@@ -173,7 +173,7 @@ export default function Registro() {
               onClick={handleDescargar}
               style={{
                 marginTop: '15px',
-                backgroundColor: '#007bff',
+                backgroundColor: '#3BD8CF',
                 color: 'white',
                 border: 'none',
                 borderRadius: '8px',

@@ -108,7 +108,7 @@ export default function Confirmacion() {
           alignItems: "center",
           justifyContent: "center",
           padding: "30px",
-          background: "linear-gradient(135deg, #00C3FF, #004E92)",
+          background: "linear-gradient(135deg, #3BD8CF, #00C3FF)",
         }}
       >
         <div
@@ -123,7 +123,7 @@ export default function Confirmacion() {
           }}
         >
           <img src={logo} alt="Logo Aries" style={{ width: 170, marginBottom: 1 }} />
-          <h2 style={{ color: "#004E92", marginBottom: 20 }}>Ingreso de Usuario</h2>
+          <h2 style={{ color: "#3BD8CF", marginBottom: 20 }}>Ingreso de Usuario</h2>
 
           <input
             placeholder="Usuario"
@@ -134,7 +134,7 @@ export default function Confirmacion() {
               width: "100%",
               padding: 10,
               marginBottom: 12,
-              borderRadius: 8,
+              borderRadius: 5,
               border: "1px solid #ccc",
             }}
           />
@@ -148,7 +148,7 @@ export default function Confirmacion() {
               width: "100%",
               padding: 10,
               marginBottom: 20,
-              borderRadius: 8,
+              borderRadius: 5,
               border: "1px solid #ccc",
             }}
           />
@@ -157,10 +157,10 @@ export default function Confirmacion() {
             style={{
               width: "100%",
               padding: "10px 12px",
-              background: "linear-gradient(90deg, #00C3FF, #004E92)",
+              background: "linear-gradient(90deg, #3BD8CF, #00C3FF)",
               color: "white",
               border: "none",
-              borderRadius: 8,
+              borderRadius: 25,
               cursor: "pointer",
               fontWeight: "bold",
             }}
@@ -177,12 +177,12 @@ export default function Confirmacion() {
 
   // 🟢 Vista principal
   return (
-    <div style={{ padding: 20, textAlign: "center", backgroundColor: "#f5f5f5", minHeight: "100vh" }}>
-      <img src={logo} alt="Logo Aries" style={{ width: 150, marginBottom: 10 }} />
-      <h2 style={{ color: "#004E92" }}>Confirmar Asistencia</h2>
+    <div style={{ padding: 15, textAlign: "center", backgroundColor: "#f5f5f5", minHeight: "72vh" }}>
+      <img src={logo} alt="Logo Aries" style={{ width: 150, marginBottom: 1 }} />
+      <h2 style={{ color: "#3BD8CF" }}>Confirmar Asistencia</h2>
       <p>Escanea el QR o ingresa la cédula manualmente.</p>
 
-      <div style={{ maxWidth: 400, margin: "20px auto" }}>
+      <div style={{ maxWidth: 400, margin: "10px auto" }}>
         <QrReader
           constraints={{ facingMode: "environment" }}
           onResult={(result, error) => {
@@ -198,8 +198,8 @@ export default function Confirmacion() {
           placeholder="Cédula (manual)"
           ref={manualRef}
           style={{
-            padding: 8,
-            borderRadius: 8,
+            padding: 10,
+            borderRadius: 5,
             border: "1px solid #ccc",
             marginRight: 10,
           }}
@@ -208,10 +208,10 @@ export default function Confirmacion() {
           onClick={() => confirmar(manualRef.current.value)}
           style={{
             padding: "8px 14px",
-            background: "linear-gradient(90deg, #00C3FF, #004E92)",
+            background: "linear-gradient(90deg, #3BD8CF, #00C3FF)",
             color: "white",
             border: "none",
-            borderRadius: 8,
+            borderRadius: 15,
             cursor: "pointer",
             fontWeight: "bold",
           }}
@@ -263,7 +263,7 @@ export default function Confirmacion() {
                 marginTop: 20,
                 padding: "10px 20px",
                 borderRadius: 10,
-                background: "linear-gradient(90deg, #00C3FF, #004E92)",
+                background: "linear-gradient(90deg, #3BD8CF, #00C3FF)",
                 color: "white",
                 border: "none",
                 fontWeight: "bold",

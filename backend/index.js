@@ -64,8 +64,8 @@ app.post('/api/inscripcion', async (req, res) => {
   try {
     const { nombre, cedula, email, cargo, entidad } = req.body;
 
-    if (!nombre || !cedula || !email) {
-      return res.status(400).json({ error: "Faltan campos obligatorios (nombre, cedula, email)" });
+    if (!nombre || !cedula || !entidad) {
+      return res.status(400).json({ error: "Faltan campos obligatorios (nombre, cedula, entidad)" });
     }
 
     // 🔍 Validar si la cédula ya existe
